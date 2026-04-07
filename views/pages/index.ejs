@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    <%= title %>
+  </title>
+</head>
+
+<body>
+  <header>
+    <h1>img Stack</h1>
+    <p>A simple, secure place for your images.</p>
+  </header>
+
+  <main>
+    <% if (currentUser) { %>
+      <section>
+        <h2>Welcome back, <%= currentUser.username %>!</h2>
+        <p>Ready to manage your files?</p>
+        <div class="actions">
+          <a href="/dashboard">
+            <button type="button">Go to Dashboard</button>
+          </a>
+          <a href="/auth/logout">Logout</a>
+        </div>
+      </section>
+      <% } else { %>
+        <section>
+          <h2>Get Started</h2>
+          <p>Please log in or create an account to start uploading images.</p>
+          <div class="actions">
+            <a href="/auth/login">
+              <button type="button">Log In</button>
+            </a>
+            <a href="/auth/signup">
+              <button type="button">Sign Up</button>
+            </a>
+          </div>
+        </section>
+        <% } %>
+  </main>
+
+  <footer>
+    <p>&copy; <%= new Date().getFullYear() %> img Stack</p>
+  </footer>
+</body>
+
+</html>

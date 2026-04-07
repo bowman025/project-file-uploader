@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>
+    <%= title %>
+  </title>
+</head>
+
+<body>
+  <nav>
+    <a href="<%= file.folderId ? '/folders/' + file.folderId : '/dashboard' %>">← Back</a>
+  </nav>
+
+  <h1>File: <%= file.name %>
+  </h1>
+
+  <section>
+    <!-- Assuming you used express.static('uploads') in app.js -->
+    <div class="preview">
+      <img src="/uploads/<%= file.name %>" alt="<%= file.name %>" style="max-width: 500px;">
+    </div>
+
+    <ul>
+      <li><strong>Size:</strong>
+        <%= (Number(file.size) / 1024).toFixed(2) %> KB
+      </li>
+      <li><strong>Type:</strong>
+        <%= file.mimeType %>
+      </li>
+      <li><strong>Uploaded:</strong>
+        <%= formatExactDate(file.uploadedAt) %>
+      </li>
+      <li><strong>Location:</strong>
+        <%= file.folder ? file.folder.name : 'Root' %>
+      </li>
+    </ul>
+
+    <hr>
+
+    <!-- Delete Action -->
+    <form action="/files/<%= file.id %>/delete" method="POST"
+      onsubmit="return confirm('Delete this image permanently?')">
+      <button type="submit" style="color: red;">Delete File</button>
+    </form>
+  </section>
+</body>
+
+</html>

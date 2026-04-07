@@ -28,6 +28,7 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/folders', folderRouter);
 app.use('/files', fileRouter);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(handle404);
 app.use(globalErrorHandler);
