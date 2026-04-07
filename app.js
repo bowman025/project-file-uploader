@@ -7,6 +7,8 @@ const setViewLocals = require('./middleware/viewMiddleware');
 const { handle404, globalErrorHandler } = require('./middleware/errorMiddleware');
 const indexRouter = require('./routes/indexRouter');
 const authRouter = require('./routes/authRouter');
+const folderRouter = require('./routes/folderRouter');
+const fileRouter = require('./routes/fileRouter');
 const path = require('node:path');
 
 const assetsPath = path.join(__dirname, 'public');
@@ -24,6 +26,8 @@ app.use(setViewLocals);
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+app.use('/folders', folderRouter);
+app.use('/files', fileRouter);
 
 app.use(handle404);
 app.use(globalErrorHandler);
