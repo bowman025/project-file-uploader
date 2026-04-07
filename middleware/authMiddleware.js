@@ -1,0 +1,11 @@
+exports.isGuest = (req, res, next) => {
+  if (!req.isAuthenticated()) return next();
+
+  res.redirect('/');
+}
+
+exports.isAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) return next();
+
+  res.redirect('/auth/login');
+}

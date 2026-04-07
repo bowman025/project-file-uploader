@@ -1,0 +1,43 @@
+{
+  "name": "project-file-uploader",
+  "version": "1.0.0",
+  "description": "A basic version of a personal storage service in accordance with The Odin Project's NodeJS course.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bowman025/project-file-uploader.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/bowman025/project-file-uploader/issues"
+  },
+  "homepage": "https://github.com/bowman025/project-file-uploader#readme",
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.6.0",
+    "@prisma/client": "^7.6.0",
+    "@quixo3/prisma-session-store": "^3.1.19",
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.9.0",
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.4.1",
+    "ejs": "^5.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.2",
+    "helmet": "^8.1.0",
+    "multer": "^2.1.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "pg": "^8.20.0",
+    "pretty-bytes": "^7.1.0"
+  },
+  "devDependencies": {
+    "prisma": "^7.6.0"
+  }
+}
