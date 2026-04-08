@@ -42,7 +42,7 @@
         <% } %>
           <% files.forEach(file=> { %>
             <li>
-              🖼️ <%= file.name %>
+              🖼️ <%= file.displayName %>
                 (<%= (Number(file.size) / 1024).toFixed(2) %> KB) -
                   <%= formatExactDate(file.uploadedAt) %>
                     <!-- Link to File Details (we will build this next) -->

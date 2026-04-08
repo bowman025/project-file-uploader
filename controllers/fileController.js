@@ -13,6 +13,7 @@ exports.uploadFile = async (req, res, next) => {
     await prisma.file.create({
       data: {
         name: req.file.filename,
+        displayName: req.file.originalname,
         size: req.file.size,
         mimeType: req.file.mimetype,
         userId: req.user.id,
@@ -48,7 +49,6 @@ exports.deleteFile = async (req, res, next) => {
     const file = await prisma.file.findUnique({
       where: { id: req.params.id }
     });
-
     if (!file || file.userId !== req.user.id) {
       throw new Error('Unauthorized or file not found');
     }

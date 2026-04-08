@@ -23,18 +23,19 @@ model User {
 }
 
 model File {
-  id         String   @id @default(uuid())
-  name       String   @db.VarChar(255)
-  size       Int
-  uploadedAt DateTime @default(now())
-  mimeType   String
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     Int
-  folder     Folder?  @relation(fields: [folderId], references: [id], onDelete: Cascade)
-  folderId   String?
-  cloudId    String?  @db.VarChar(255)
-  cloudUrl   String?  @db.VarChar(255)
-  cloudVer   Int?
+  id          String   @id @default(uuid())
+  name        String   @db.VarChar(255)
+  displayName String   @db.VarChar(255)
+  size        Int
+  uploadedAt  DateTime @default(now())
+  mimeType    String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  folder      Folder?  @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  folderId    String?
+  cloudId     String?  @db.VarChar(255)
+  cloudUrl    String?  @db.VarChar(255)
+  cloudVer    Int?
 
   @@map("files")
 }

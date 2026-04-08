@@ -11,6 +11,7 @@ CREATE TABLE "users" (
 CREATE TABLE "files" (
     "id" TEXT NOT NULL,
     "name" VARCHAR(255) NOT NULL,
+    "displayName" VARCHAR(255) NOT NULL,
     "size" INTEGER NOT NULL,
     "uploadedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "mimeType" TEXT NOT NULL,

@@ -13,13 +13,13 @@
     <a href="<%= file.folderId ? '/folders/' + file.folderId : '/dashboard' %>">← Back</a>
   </nav>
 
-  <h1>File: <%= file.name %>
+  <h1>File: <%= file.displayName %>
   </h1>
 
   <section>
     <!-- Assuming you used express.static('uploads') in app.js -->
     <div class="preview">
-      <img src="/uploads/<%= file.name %>" alt="<%= file.name %>" style="max-width: 500px;">
+      <img src="/uploads/<%= file.name %>" alt="<%= file.displayName %>" style="max-width: 500px;">
     </div>
 
     <ul>
