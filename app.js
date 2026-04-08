@@ -1,8 +1,8 @@
 require('dotenv/config');
 
 const express = require('express');
-const passport = require('./config/passport');
-const sessionConfig = require('./config/session');
+const passport = require('./lib/passport');
+const sessionConfig = require('./lib/session');
 const setViewLocals = require('./middleware/viewMiddleware');
 const { handle404, globalErrorHandler } = require('./middleware/errorMiddleware');
 const indexRouter = require('./routes/indexRouter');

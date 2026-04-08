@@ -17,11 +17,13 @@
   </h1>
 
   <section>
-    <!-- Assuming you used express.static('uploads') in app.js -->
     <div class="preview">
-      <img src="/uploads/<%= file.name %>" alt="<%= file.displayName %>" style="max-width: 500px;">
+      <% if (file.cloudUrl) { %>
+        <img src="<%= file.cloudUrl %>" alt="<%= file.displayName %>" style="max-width: 500px;">
+        <% } else { %>
+          <img src="/uploads/<%= file.name %>" alt="<%= file.displayName %>" style="max-width: 500px;">
+          <% } %>
     </div>
-
     <ul>
       <li><strong>Size:</strong>
         <%= (Number(file.size) / 1024).toFixed(2) %> KB
@@ -39,11 +41,15 @@
 
     <hr>
 
-    <!-- Delete Action -->
-    <form action="/files/<%= file.id %>/delete" method="POST"
-      onsubmit="return confirm('Delete this image permanently?')">
-      <button type="submit" style="color: red;">Delete File</button>
-    </form>
+    <div class="actions" style="margin-top: 20px;">
+      <a href="/files/<%= file.id %>/download" class="button">
+        <button type="button">Download File</button>
+      </a>
+      <form action="/files/<%= file.id %>/delete" method="POST" style="display: inline;"
+        onsubmit="return confirm('Delete this image permanently?')">
+        <button type="submit" style="color: red;">Delete File</button>
+      </form>
+    </div>
   </section>
 </body>
 

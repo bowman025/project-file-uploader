@@ -1,5 +1,10 @@
 const { Router } = require('express');
-const { uploadFile, getFileDetails, deleteFile } = require('../controllers/fileController');
+const {
+  uploadFile,
+  downloadFile,
+  getFileDetails,
+  deleteFile
+} = require('../controllers/fileController');
 const { isAuthenticated } = require('../middleware/authMiddleware');
 const upload = require('../middleware/multerMiddleware');
 
@@ -9,6 +14,7 @@ fileRouter.use(isAuthenticated);
 
 fileRouter.post('/upload', upload.single('file'), uploadFile);
 fileRouter.get('/:id', getFileDetails);
+fileRouter.get('/:id/download', downloadFile);
 fileRouter.post('/:id/delete', deleteFile);
 
 module.exports = fileRouter;

@@ -1,5 +1,7 @@
 const fs = require('fs');
 const path = require('path');
+const streamifier = require('streamifier');
+const cloudinary = require('../lib/cloudinary');
 const { prisma } = require('../lib/prisma');
 
 exports.uploadFile = async (req, res, next) => {
@@ -10,56 +12,109 @@ exports.uploadFile = async (req, res, next) => {
 
     const { folderId } = req.body;
 
-    await prisma.file.create({
-      data: {
-        name: req.file.filename,
-        displayName: req.file.originalname,
-        size: req.file.size,
-        mimeType: req.file.mimetype,
-        userId: req.user.id,
-        folderId: folderId || null,
-      },
-    });
+    let fileData = {
+      displayName: req.file.originalname,
+      size: req.file.size,
+      mimeType: req.file.mimetype,
+      userId: req.user.id,
+      folderId: folderId || null,
+    }
 
+    if (process.env.STORAGE_MODE === 'cloudinary') {
+      const uploadFromBuffer = (req) => {
+        return new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            { folder: 'project_file_uploader' },
+            (error, result) => {
+              if (result) resolve(result);
+              else reject(error);
+            }
+          );
+          streamifier.createReadStream(req.file.buffer).pipe(stream);
+        });
+      }
+
+      const result = await uploadFromBuffer(req);
+
+      fileData.name = result.public_id;
+      fileData.cloudId = result.public_id;
+      fileData.cloudUrl = result.secure_url;
+      fileData.cloudVer = result.version;
+    } else {
+      fileData.name = req.file.filename;
+    }
+
+    await prisma.file.create({ data: fileData });
     res.redirect(folderId ? `/folders/${folderId}` : '/dashboard');
   } catch (error) {
     next(error);
   }
-};
+}
 
-exports.getFileDetails = async (req, res, next) => {
+exports.downloadFile = async (req, res, next) => {
   try {
     const file = await prisma.file.findUnique({
       where: { id: req.params.id },
-      include: { folder: true }
     });
 
     if (!file || file.userId !== req.user.id) {
       return res.status(404).render('error', { message: 'File not found' });
     }
 
-    res.render('fileDetails', { title: file.name, file });
+    if (file.cloudUrl) {
+      const downloadUrl = cloudinary.url(file.cloudId, {
+        flags: "attachment",
+        attachment_filename: file.displayName,
+      });
+      return res.redirect(downloadUrl);
+    } else {
+      const filePath = path.join(__dirname, '../uploads', file.name);
+      res.download(filePath, file.displayName, (err) => {
+        if (err) next(err);
+      });
+    }
   } catch (error) {
     next(error);
   }
-};
+}
+
+exports.getFileDetails = async (req, res, next) => {
+  try {
+    const file = await prisma.file.findUnique({
+      where: { id: req.params.id },
+      include: { folder: true },
+    });
+
+    if (!file || file.userId !== req.user.id) {
+      return res.status(404).render('error', { message: 'File not found' });
+    }
+
+    res.render('fileDetails', { title: file.displayName, file });
+  } catch (error) {
+    next(error);
+  }
+}
 
 exports.deleteFile = async (req, res, next) => {
   try {
     const file = await prisma.file.findUnique({
-      where: { id: req.params.id }
+      where: { id: req.params.id },
     });
+
     if (!file || file.userId !== req.user.id) {
       throw new Error('Unauthorized or file not found');
     }
 
+    if (file.cloudId) {
+      await cloudinary.uploader.destroy(file.cloudId);
+    } else {
+      const filePath = path.join(__dirname, '../uploads', file.name);
+      if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+    }
+
     await prisma.file.delete({ where: { id: file.id } });
-
-    const filePath = path.join(__dirname, '../uploads', file.name);
-    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-
     res.redirect(file.folderId ? `/folders/${file.folderId}` : '/dashboard');
   } catch (error) {
     next(error);
   }
-};
+}

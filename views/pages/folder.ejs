@@ -20,12 +20,10 @@
 
   <hr>
 
-  <!-- Upload specifically to THIS folder -->
   <section>
     <h3>Upload an Image to this Folder</h3>
     <form action="/files/upload" method="POST" enctype="multipart/form-data">
       <input type="file" name="file" required>
-      <!-- Hidden input to tell the controller which folder this belongs to -->
       <input type="hidden" name="folderId" value="<%= folder.id %>">
       <button type="submit">Upload to <%= folder.name %></button>
     </form>
@@ -33,7 +31,6 @@
 
   <hr>
 
-  <!-- List files in this folder -->
   <section>
     <h3>Files in this Folder</h3>
     <ul>
@@ -45,10 +42,9 @@
               🖼️ <%= file.displayName %>
                 (<%= (Number(file.size) / 1024).toFixed(2) %> KB) -
                   <%= formatExactDate(file.uploadedAt) %>
-                    <!-- Link to File Details (we will build this next) -->
                     <a href="/files/<%= file.id %>">View Details</a>
             </li>
-            <% }) %>
+            <% }); %>
     </ul>
   </section>
 

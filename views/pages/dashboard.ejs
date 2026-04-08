@@ -14,7 +14,6 @@
 
   <hr>
 
-  <!-- Create Folder Section -->
   <section>
     <h3>Create New Folder</h3>
     <form action="/folders/create" method="POST">
@@ -25,7 +24,6 @@
 
   <hr>
 
-  <!-- File Upload Section -->
   <section>
     <h3>Upload an Image</h3>
     <p>Allowed: JPG, PNG, GIF (Max 5MB)</p>
@@ -49,7 +47,6 @@
 
   <hr>
 
-  <!-- Display Section -->
   <section>
     <h3>Your Items</h3>
 
@@ -73,6 +70,7 @@
               🖼️ <%= file.displayName %>
                 (<%= (Number(file.size) / 1024).toFixed(2) %> KB) -
                   <%= formatExactDate(file.uploadedAt) %>
+                    <a href="/files/<%= file.id %>">View Details</a>
             </li>
             <% }) %>
     </ul>
