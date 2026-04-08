@@ -19,7 +19,16 @@ const app = express();
 app.set('views', path.join(__dirname, '/views/pages'));
 app.set('view engine', 'ejs');
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        "default-src": ["'self'"],
+        "img-src": ["'self'", "data:", "https://res.cloudinary.com"],
+      },
+    },
+  })
+);
 app.use(sessionConfig);
 app.use(passport.session());
 app.use(express.static(assetsPath));

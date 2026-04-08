@@ -71,9 +71,9 @@ exports.downloadFile = async (req, res, next) => {
     const file = await getFileAndCheckOwnership(req.params.id, req.user.id);
 
     if (file.cloudUrl) {
+      const downloadName = path.parse(file.displayName).name;
       const downloadUrl = cloudinary.url(file.cloudId, {
-        flags: "attachment",
-        attachment_filename: file.displayName,
+        flags: `attachment:${downloadName}`,
       });
       return res.redirect(downloadUrl);
     } else {
