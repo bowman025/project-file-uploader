@@ -45,10 +45,9 @@
       <a href="/files/<%= file.id %>/download" class="button">
         <button type="button">Download File</button>
       </a>
-      <form action="/files/<%= file.id %>/delete" method="POST" style="display: inline;"
-        onsubmit="return confirm('Delete this image permanently?')">
-        <button type="submit" style="color: red;">Delete File</button>
-      </form>
+      <a href="/files/<%= file.id %>/confirm-delete" style="color: red; text-decoration: none;">
+        <button type="button" style="color: red;">Delete File</button>
+      </a>
     </div>
   </section>
 </body>

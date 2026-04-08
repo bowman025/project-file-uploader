@@ -95,6 +95,23 @@ exports.getFileDetails = async (req, res, next) => {
   }
 }
 
+exports.getDeleteConfirmation = async (req, res, next) => {
+  try {
+    const file = await prisma.file.findUnique({
+      where: { id: req.params.id },
+      include: { folder: true },
+    });
+
+    if (!file || file.userId !== req.user.id) {
+      return res.status(404).render('error', { message: 'File not found' });
+    }
+
+    res.render('deleteConfirmation', { title: 'Confirm Delete', file });
+  } catch (error) {
+    next(error);
+  }
+}
+
 exports.deleteFile = async (req, res, next) => {
   try {
     const file = await prisma.file.findUnique({

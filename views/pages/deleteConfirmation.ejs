@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+</head>
+
+<body>
+  <nav>
+    <a href="/files/<%= file.id %>">← Back to File</a>
+  </nav>
+
+  <h1>Delete File</h1>
+
+  <div style="border: 1px solid #ccc; padding: 20px; margin: 20px 0;">
+    <p>Are you sure you want to permanently delete this file?</p>
+
+    <div style="margin: 20px 0;">
+      <strong><%= file.displayName %></strong><br>
+      Size: <%= (Number(file.size) / 1024).toFixed(2) %> KB<br>
+      Type: <%= file.mimeType %>
+    </div>
+
+    <div style="color: red; font-weight: bold;">
+      ⚠️ This action cannot be undone!
+    </div>
+  </div>
+
+  <div style="margin-top: 30px;">
+    <form action="/files/<%= file.id %>/delete" method="POST" style="display: inline;">
+      <button type="submit" style="color: white; background: red; padding: 10px 20px; border: none; cursor: pointer;">
+        Yes, Delete File
+      </button>
+    </form>
+
+    <a href="/files/<%= file.id %>" style="margin-left: 20px;">
+      <button type="button" style="padding: 10px 20px; border: 1px solid #ccc; background: white; cursor: pointer;">
+        Cancel
+      </button>
+    </a>
+  </div>
+</body>
+
+</html>
