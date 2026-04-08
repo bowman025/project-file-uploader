@@ -1,5 +1,10 @@
 const { Router } = require('express');
-const { getFolder, createFolder } = require('../controllers/folderController');
+const {
+  getFolder,
+  createFolder,
+  getDeleteFolderConfirmation,
+  deleteFolder
+} = require('../controllers/folderController');
 const { isAuthenticated } = require('../middleware/authMiddleware');
 
 const folderRouter = Router();
@@ -8,6 +13,7 @@ folderRouter.use(isAuthenticated);
 
 folderRouter.get('/:id', getFolder);
 folderRouter.post('/create', createFolder);
+folderRouter.get('/:id/confirm-delete', getDeleteFolderConfirmation);
+folderRouter.post('/:id/delete', deleteFolder);
 
 module.exports = folderRouter;
-

@@ -1,8 +1,23 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require('node:fs');
+const path = require('node:path');
 const streamifier = require('streamifier');
 const cloudinary = require('../lib/cloudinary');
 const { prisma } = require('../lib/prisma');
+
+const getFileAndCheckOwnership = async (fileId, userId, includeOptions = {}) => {
+  const file = await prisma.file.findUnique({
+    where: { id: fileId },
+    include: includeOptions,
+  });
+
+  if (!file || file.userId !== userId) {
+    const error = new Error('File not found');
+    error.status = 404;
+    throw error;
+  }
+
+  return file;
+};
 
 exports.uploadFile = async (req, res, next) => {
   try {
@@ -53,13 +68,7 @@ exports.uploadFile = async (req, res, next) => {
 
 exports.downloadFile = async (req, res, next) => {
   try {
-    const file = await prisma.file.findUnique({
-      where: { id: req.params.id },
-    });
-
-    if (!file || file.userId !== req.user.id) {
-      return res.status(404).render('error', { message: 'File not found' });
-    }
+    const file = await getFileAndCheckOwnership(req.params.id, req.user.id);
 
     if (file.cloudUrl) {
       const downloadUrl = cloudinary.url(file.cloudId, {
@@ -80,14 +89,7 @@ exports.downloadFile = async (req, res, next) => {
 
 exports.getFileDetails = async (req, res, next) => {
   try {
-    const file = await prisma.file.findUnique({
-      where: { id: req.params.id },
-      include: { folder: true },
-    });
-
-    if (!file || file.userId !== req.user.id) {
-      return res.status(404).render('error', { message: 'File not found' });
-    }
+    const file = await getFileAndCheckOwnership(req.params.id, req.user.id, { folder: true });
 
     res.render('fileDetails', { title: file.displayName, file });
   } catch (error) {
@@ -97,14 +99,7 @@ exports.getFileDetails = async (req, res, next) => {
 
 exports.getDeleteConfirmation = async (req, res, next) => {
   try {
-    const file = await prisma.file.findUnique({
-      where: { id: req.params.id },
-      include: { folder: true },
-    });
-
-    if (!file || file.userId !== req.user.id) {
-      return res.status(404).render('error', { message: 'File not found' });
-    }
+    const file = await getFileAndCheckOwnership(req.params.id, req.user.id, { folder: true });
 
     res.render('deleteConfirmation', { title: 'Confirm Delete', file });
   } catch (error) {
@@ -114,13 +109,7 @@ exports.getDeleteConfirmation = async (req, res, next) => {
 
 exports.deleteFile = async (req, res, next) => {
   try {
-    const file = await prisma.file.findUnique({
-      where: { id: req.params.id },
-    });
-
-    if (!file || file.userId !== req.user.id) {
-      return res.status(403).render('error', { message: 'You do not have access rights to the file' });
-    }
+    const file = await getFileAndCheckOwnership(req.params.id, req.user.id);
 
     if (file.cloudId) {
       await cloudinary.uploader.destroy(file.cloudId);

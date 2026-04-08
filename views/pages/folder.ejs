@@ -18,6 +18,12 @@
   <p>Created on: <%= formatExactDate(folder.createdAt) %>
   </p>
 
+  <div style="margin: 20px 0;">
+    <a href="/folders/<%= folder.id %>/confirm-delete" style="color: red; text-decoration: none;">
+      <button type="button" style="color: red;">Delete Folder</button>
+    </a>
+  </div>
+
   <hr>
 
   <section>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+</head>
+
+<body>
+  <nav>
+    <a href="/folders/<%= folder.id %>">← Back to Folder</a>
+  </nav>
+
+  <h1>Delete Folder</h1>
+
+  <div style="border: 1px solid #ccc; padding: 20px; margin: 20px 0;">
+    <p>Are you sure you want to permanently delete this folder and all its contents?</p>
+
+    <div style="margin: 20px 0;">
+      <strong>📁 <%= folder.name %></strong><br>
+      Created: <%= formatExactDate(folder.createdAt) %><br>
+      Files: <%= fileCount %>
+    </div>
+
+    <% if (fileCount > 0) { %>
+      <div style="color: orange; font-weight: bold; margin: 10px 0;">
+        ⚠️ This folder contains <%= fileCount %> file<%= fileCount === 1 ? '' : 's' %> that will also be deleted!
+      </div>
+    <% } %>
+
+    <div style="color: red; font-weight: bold;">
+      ⚠️ This action cannot be undone!
+    </div>
+  </div>
+
+  <div style="margin-top: 30px;">
+    <form action="/folders/<%= folder.id %>/delete" method="POST" style="display: inline;">
+      <button type="submit" style="color: white; background: red; padding: 10px 20px; border: none; cursor: pointer;">
+        Yes, Delete Folder<%= fileCount > 0 ? ' and Files' : '' %>
+      </button>
+    </form>
+
+    <a href="/folders/<%= folder.id %>" style="margin-left: 20px;">
+      <button type="button" style="padding: 10px 20px; border: 1px solid #ccc; background: white; cursor: pointer;">
+        Cancel
+      </button>
+    </a>
+  </div>
+</body>
+
+</html>
