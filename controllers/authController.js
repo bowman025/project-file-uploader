@@ -5,7 +5,7 @@ const { body, matchedData, validationResult } = require('express-validator');
 
 exports.getSignup = (_, res) => {
   res.render('signup', { title: 'Sign Up', errors: [], user: {} });
-};
+}
 
 exports.postSignup = [
   body('username')
@@ -67,7 +67,7 @@ exports.getLogin = (req, res) => {
   const errors = req.session.messages || [];
   req.session.messages = [];
   res.render('login', { title: 'Log In', errors });
-};
+}
 
 exports.postLogin = passport.authenticate('local', {
   successRedirect: '/dashboard',
@@ -75,9 +75,9 @@ exports.postLogin = passport.authenticate('local', {
   failureMessage: true,
 });
 
-exports.getLogout = (req, res, next) => {
+exports.postLogout = (req, res, next) => {
   req.logout((err) => {
     if (err) return next(err);
     res.redirect('/');
   });
-};
+}

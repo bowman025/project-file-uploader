@@ -1,6 +1,7 @@
 require('dotenv/config');
 
 const express = require('express');
+const helmet = require('helmet');
 const passport = require('./lib/passport');
 const sessionConfig = require('./lib/session');
 const setViewLocals = require('./middleware/viewMiddleware');
@@ -18,6 +19,7 @@ const app = express();
 app.set('views', path.join(__dirname, '/views/pages'));
 app.set('view engine', 'ejs');
 
+app.use(helmet());
 app.use(sessionConfig);
 app.use(passport.session());
 app.use(express.static(assetsPath));

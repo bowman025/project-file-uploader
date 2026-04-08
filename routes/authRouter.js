@@ -4,7 +4,7 @@ const {
   postSignup,
   getLogin,
   postLogin,
-  getLogout
+  postLogout
 } = require('../controllers/authController');
 const { isGuest, isAuthenticated } = require('../middleware/authMiddleware');
 const authRouter = Router();
@@ -15,6 +15,6 @@ authRouter.post('/signup', isGuest, postSignup);
 authRouter.get('/login', isGuest, getLogin);
 authRouter.post('/login', isGuest, postLogin);
 
-authRouter.get('/logout', isAuthenticated, getLogout);
+authRouter.post('/logout', isAuthenticated, postLogout);
 
 module.exports = authRouter;

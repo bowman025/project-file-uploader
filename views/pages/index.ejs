@@ -24,7 +24,9 @@
           <a href="/dashboard">
             <button type="button">Go to Dashboard</button>
           </a>
-          <a href="/auth/logout">Logout</a>
+          <form action="/auth/logout" method="POST">
+            <button type="submit">Logout</button>
+          </form>
         </div>
       </section>
       <% } else { %>

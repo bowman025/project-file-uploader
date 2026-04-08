@@ -10,7 +10,9 @@
 
 <body>
   <h1>Welcome, <%= currentUser.username %>!</h1>
-  <a href="/auth/logout">Logout</a>
+  <form action="/auth/logout" method="POST">
+    <button type="submit">Logout</button>
+  </form>
 
   <hr>
 

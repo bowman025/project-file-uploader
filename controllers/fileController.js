@@ -21,7 +21,7 @@ exports.uploadFile = async (req, res, next) => {
     }
 
     if (process.env.STORAGE_MODE === 'cloudinary') {
-      const uploadFromBuffer = (req) => {
+      const uploadFromBuffer = () => {
         return new Promise((resolve, reject) => {
           const stream = cloudinary.uploader.upload_stream(
             { folder: 'project_file_uploader' },
@@ -34,7 +34,7 @@ exports.uploadFile = async (req, res, next) => {
         });
       }
 
-      const result = await uploadFromBuffer(req);
+      const result = await uploadFromBuffer();
 
       fileData.name = result.public_id;
       fileData.cloudId = result.public_id;
@@ -102,14 +102,19 @@ exports.deleteFile = async (req, res, next) => {
     });
 
     if (!file || file.userId !== req.user.id) {
-      throw new Error('Unauthorized or file not found');
+      return res.status(403).render('error', { message: 'You do not have access rights to the file' });
     }
 
     if (file.cloudId) {
       await cloudinary.uploader.destroy(file.cloudId);
     } else {
       const filePath = path.join(__dirname, '../uploads', file.name);
-      if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+      try {
+        await fs.promises.access(filePath);
+        await fs.promises.unlink(filePath);
+      } catch (error) {
+        if (error.code !== 'ENOENT') throw error;
+      }
     }
 
     await prisma.file.delete({ where: { id: file.id } });
