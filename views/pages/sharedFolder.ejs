@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>
+    <%= title %>
+  </title>
+</head>
+
+<body>
+  <h1>Shared Folder: <%= folder.name %>
+  </h1>
+  <p>Valid until: <%= formatExactDate(expiresAt) %>
+  </p>
+
+  <ul>
+    <% files.forEach(file=> { %>
+      <li>
+        <img src="<%= file.cloudUrl %>" width="100">
+        <%= file.displayName %>
+          <a href="/share/download/<%= file.id %>">Download</a>
+      </li>
+      <% }) %>
+  </ul>
+</body>
+
+</html>

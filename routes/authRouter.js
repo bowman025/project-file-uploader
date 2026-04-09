@@ -7,6 +7,7 @@ const {
   postLogout
 } = require('../controllers/authController');
 const { isGuest, isAuthenticated } = require('../middleware/authMiddleware');
+
 const authRouter = Router();
 
 authRouter.get('/signup', isGuest, getSignup);

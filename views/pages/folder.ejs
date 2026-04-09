@@ -38,6 +38,25 @@
   <hr>
 
   <section>
+    <h3>Share this Folder</h3>
+    <form action="/share/create" method="POST">
+      <input type="hidden" name="folderId" value="<%= folder.id %>">
+      <select name="duration">
+        <option value="1">1 Day</option>
+        <option value="7">7 Days</option>
+        <option value="30">30 Days</option>
+      </select>
+      <button type="submit">Generate Share Link</button>
+    </form>
+
+    <% if (shareId) { %>
+      <p>Share this URL: <code><%= origin %>/share/<%= shareId %></code></p>
+      <% } %>
+  </section>
+
+  <hr>
+
+  <section>
     <h3>Files in this Folder</h3>
     <ul>
       <% if (files.length===0) { %>

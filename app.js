@@ -8,11 +8,13 @@ const setViewLocals = require('./middleware/viewMiddleware');
 const { handle404, globalErrorHandler } = require('./middleware/errorMiddleware');
 const indexRouter = require('./routes/indexRouter');
 const authRouter = require('./routes/authRouter');
-const folderRouter = require('./routes/folderRouter');
 const fileRouter = require('./routes/fileRouter');
+const folderRouter = require('./routes/folderRouter');
+const shareRouter = require('./routes/shareRouter');
 const path = require('node:path');
 
 const assetsPath = path.join(__dirname, 'public');
+const uploadsPath = path.join(__dirname, 'uploads');
 const port = process.env.PORT || 3000;
 const app = express();
 
@@ -39,7 +41,8 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/folders', folderRouter);
 app.use('/files', fileRouter);
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/share', shareRouter);
+app.use('/uploads', express.static(uploadsPath));
 
 app.use(handle404);
 app.use(globalErrorHandler);

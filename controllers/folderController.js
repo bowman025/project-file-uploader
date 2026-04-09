@@ -43,6 +43,8 @@ exports.getFolder = async (req, res, next) => {
       title: `img Stack: ${folder.name}`,
       folder,
       files: folder.files,
+      shareId: req.query.shareId,
+      origin: `${req.protocol}://${req.get('host')}`,
     });
   } catch (error) {
     next(error);
