@@ -53,10 +53,10 @@ exports.getSharedFolder = async (req, res, next) => {
 exports.downloadSharedFile = async (req, res, next) => {
   try {
     const file = await prisma.file.findUnique({
-      where: { id: req.params.fileId }
+      where: { id: req.params.id }
     });
 
-    if (!file || !file.cloudId) throw new Error('File not found');
+    if (!file || !file.cloudId || !file.cloudUrl) throw new Error('File not found');
 
     const downloadName = path.parse(file.displayName).name;
     const downloadUrl = cloudinary.url(file.cloudId, {

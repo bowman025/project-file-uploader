@@ -19,7 +19,9 @@
       <li>
         <img src="<%= file.cloudUrl %>" width="100">
         <%= file.displayName %>
-          <a href="/share/download/<%= file.id %>">Download</a>
+          <a href="/share/<%= file.id %>/download">
+            <button type="button">Download File</button>
+          </a>
       </li>
       <% }) %>
   </ul>

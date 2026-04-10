@@ -9,7 +9,7 @@ const { isAuthenticated } = require('../middleware/authMiddleware');
 const shareRouter = Router();
 
 shareRouter.post('/create', isAuthenticated, createShare);
-shareRouter.get('/download/:id', downloadSharedFile);
 shareRouter.get('/:id', getSharedFolder);
+shareRouter.get('/:id/download', downloadSharedFile);
 
 module.exports = shareRouter;
