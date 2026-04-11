@@ -48,48 +48,42 @@
       </select>
       <button type="submit">Generate Share Link</button>
     </form>
-
-    <% if (shareId) { %>
-      <p>Share this URL: <code><%= origin %>/share/<%= shareId %></code></p>
-      <% } %>
   </section>
 
-  <section>
-    <h3>Active Share Links</h3>
-    <% if (activeShares.length> 0) { %>
+  <% if (activeShares.length> 0) { %>
+    <section>
+      <h3>Active Share Links</h3>
       <ul>
         <% activeShares.forEach(share=> { %>
           <li>
             <strong>URL:</strong>
             <code><%= origin %>/share/<%= share.id %></code>
-            <br>
+            <p>Valid until: <%= formatExactDate(share.expiresAt) %>
+            </p>
           </li>
           <% }) %>
       </ul>
-      <% } else { %>
-        <p>No active public links for this folder.</p>
-        <% } %>
-  </section>
+    </section>
+    <% } %>
 
+      <hr>
 
-  <hr>
-
-  <section>
-    <h3>Files in this Folder</h3>
-    <ul>
-      <% if (files.length===0) { %>
-        <li>This folder is empty.</li>
-        <% } %>
-          <% files.forEach(file=> { %>
-            <li>
-              🖼️ <%= file.displayName %>
-                (<%= (Number(file.size) / 1024).toFixed(2) %> KB) -
-                  <%= formatExactDate(file.uploadedAt) %>
-                    <a href="/files/<%= file.id %>">View Details</a>
-            </li>
-            <% }); %>
-    </ul>
-  </section>
+      <section>
+        <h3>Files in this Folder</h3>
+        <ul>
+          <% if (files.length===0) { %>
+            <li>This folder is empty.</li>
+            <% } %>
+              <% files.forEach(file=> { %>
+                <li>
+                  🖼️ <%= file.displayName %>
+                    (<%= (Number(file.size) / 1024).toFixed(2) %> KB) -
+                      <%= formatExactDate(file.uploadedAt) %>
+                        <a href="/files/<%= file.id %>">View Details</a>
+                </li>
+                <% }); %>
+        </ul>
+      </section>
 
 </body>
 
