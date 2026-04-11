@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const { body, validationResult } = require('express-validator');
 const { prisma } = require('../lib/prisma');
 const cloudinary = require('../lib/cloudinary');
 
@@ -18,20 +19,35 @@ const getFolderAndCheckOwnership = async (folderId, userId, includeOptions = {})
   return folder;
 };
 
-exports.createFolder = async (req, res, next) => {
-  try {
-    const { name } = req.body;
-    await prisma.folder.create({
-      data: {
-        name,
-        userId: req.user.id,
-      },
-    });
-    res.redirect('/dashboard');
-  } catch (error) {
-    next(error);
+exports.createFolder = [
+  body('name')
+    .trim()
+    .isLength({ min: 1, max: 255 })
+    .withMessage('Folder name must be between 1 and 255 characters.'),
+
+  async (req, res, next) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).render('error', {
+          title: 'Invalid Request',
+          message: errors.array()[0].msg,
+        });
+      }
+
+      const { name } = req.body;
+      await prisma.folder.create({
+        data: {
+          name,
+          userId: req.user.id,
+        },
+      });
+      res.redirect('/dashboard');
+    } catch (error) {
+      next(error);
+    }
   }
-}
+]
 
 exports.getFolder = async (req, res, next) => {
   try {
@@ -46,7 +62,6 @@ exports.getFolder = async (req, res, next) => {
     res.render('folder', {
       title: `img Stack: ${folder.name}`,
       folder,
-      files: folder.files,
       shareId: req.query.shareId,
       origin: `${req.protocol}://${req.get('host')}`,
       activeShares: folder.sharedFolders,
@@ -79,17 +94,19 @@ exports.deleteFolder = async (req, res, next) => {
       files: true,
     });
 
-    for (const file of folder.files) {
-      if (file.cloudId) {
-        await cloudinary.uploader.destroy(file.cloudId);
-      } else {
-        const filePath = path.join(__dirname, '../uploads', file.name);
-        try {
-          await fs.promises.access(filePath);
-          await fs.promises.unlink(filePath);
-        } catch (error) {
-          if (error.code !== 'ENOENT') throw error;
-        }
+    const cloudIds = folder.files.map(f => f.cloudId).filter(Boolean);
+    if (cloudIds.length > 0) {
+      await cloudinary.api.delete_resources(cloudIds);
+    }
+
+    const localFiles = folder.files.filter(f => !f.cloudId);
+    for (const file of localFiles) {
+      const filePath = path.join(__dirname, '../uploads', file.name);
+      try {
+        await fs.promises.access(filePath);
+        await fs.promises.unlink(filePath);
+      } catch (error) {
+        if (error.code !== 'ENOENT') throw error;
       }
     }
 

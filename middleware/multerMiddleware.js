@@ -2,7 +2,7 @@ const multer = require('multer');
 const path = require('node:path');
 
 const diskStorage = multer.diskStorage({
-  destination: (req, title, cb) => {
+  destination: (req, file, cb) => {
     cb(null, 'uploads/');
   },
   filename: (req, file, cb) => {
@@ -17,7 +17,7 @@ const memoryStorage = multer.memoryStorage();
 const storageMode = process.env.STORAGE_MODE === 'cloudinary' ? memoryStorage : diskStorage;
 
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {

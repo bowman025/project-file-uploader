@@ -71,10 +71,10 @@
       <section>
         <h3>Files in this Folder</h3>
         <ul>
-          <% if (files.length===0) { %>
+          <% if (folder.files.length===0) { %>
             <li>This folder is empty.</li>
             <% } %>
-              <% files.forEach(file=> { %>
+              <% folder.files.forEach(file=> { %>
                 <li>
                   🖼️ <%= file.displayName %>
                     (<%= (Number(file.size) / 1024).toFixed(2) %> KB) -
