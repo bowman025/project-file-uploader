@@ -11,8 +11,8 @@ const folderRouter = Router();
 
 folderRouter.use(isAuthenticated);
 
-folderRouter.get('/:id', getFolder);
 folderRouter.post('/create', createFolder);
+folderRouter.get('/:id', getFolder);
 folderRouter.get('/:id/confirm-delete', getDeleteFolderConfirmation);
 folderRouter.post('/:id/delete', deleteFolder);
 

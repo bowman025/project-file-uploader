@@ -18,6 +18,7 @@ const uploadsPath = path.join(__dirname, 'uploads');
 const port = process.env.PORT || 3000;
 const app = express();
 
+app.set('trust proxy', 1);
 app.set('views', path.join(__dirname, '/views/pages'));
 app.set('view engine', 'ejs');
 
