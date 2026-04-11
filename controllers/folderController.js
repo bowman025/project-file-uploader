@@ -37,6 +37,10 @@ exports.getFolder = async (req, res, next) => {
   try {
     const folder = await getFolderAndCheckOwnership(req.params.id, req.user.id, {
       files: { orderBy: { uploadedAt: 'desc' } },
+      sharedFolders: {
+        where: { expiresAt: { gt: new Date() } },
+        orderBy: { expiresAt: 'asc' },
+      },
     });
 
     res.render('folder', {
@@ -45,6 +49,7 @@ exports.getFolder = async (req, res, next) => {
       files: folder.files,
       shareId: req.query.shareId,
       origin: `${req.protocol}://${req.get('host')}`,
+      activeShares: folder.sharedFolders,
     });
   } catch (error) {
     next(error);

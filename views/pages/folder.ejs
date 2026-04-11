@@ -54,6 +54,24 @@
       <% } %>
   </section>
 
+  <section>
+    <h3>Active Share Links</h3>
+    <% if (activeShares.length> 0) { %>
+      <ul>
+        <% activeShares.forEach(share=> { %>
+          <li>
+            <strong>URL:</strong>
+            <code><%= origin %>/share/<%= share.id %></code>
+            <br>
+          </li>
+          <% }) %>
+      </ul>
+      <% } else { %>
+        <p>No active public links for this folder.</p>
+        <% } %>
+  </section>
+
+
   <hr>
 
   <section>
