@@ -1,39 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('../partials/header') %>
+  <header>
+    <h1>Log In</h1>
+  </header>
+  <main>
 
-<head>
-  <meta charset="UTF-8">
-  <title>
-    <%= title %>
-  </title>
-</head>
+    <% if (errors && errors.length> 0) { %>
+      <ul>
+        <% errors.forEach(error=> { %>
+          <li>
+            <%= error %>
+          </li>
+          <% }) %>
+      </ul>
+      <% } %>
 
-<body>
-  <h1>Log In</h1>
-
-  <% if (errors && errors.length> 0) { %>
-    <ul style="color: red;">
-      <% errors.forEach(error=> { %>
-        <li>
-          <%= error %>
-        </li>
-        <% }) %>
-    </ul>
-    <% } %>
-
-      <form action="/auth/login" method="POST">
-        <div>
-          <label for="username">Username:</label>
-          <input type="text" name="username" id="username" required>
-        </div>
-        <div>
-          <label for="password">Password:</label>
-          <input type="password" name="password" id="password" required>
-        </div>
-        <button type="submit">Log In</button>
-      </form>
-
-      <p>Don't have an account? <a href="/auth/signup">Sign Up</a></p>
-</body>
-
-</html>
+        <%- include('../partials/loginForm') %>
+          <p>Don't have an account? <a href="/auth/signup">Sign Up</a></p>
+  </main>
+  <%- include('../partials/footer') %>

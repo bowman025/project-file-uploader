@@ -1,0 +1,15 @@
+<form action="/auth/signup" method="POST">
+  <div>
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" value="<%= user.username || '' %>" required>
+  </div>
+  <div>
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" required>
+  </div>
+  <div>
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" name="confirmPassword" id="confirmPassword" required>
+  </div>
+  <button type="submit">Sign Up</button>
+</form>

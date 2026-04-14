@@ -1,82 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <title>
-    <%= title %>
-  </title>
-</head>
-
-<body>
-  <h1>Welcome, <%= currentUser.username %>!</h1>
-  <form action="/auth/logout" method="POST">
-    <button type="submit">Logout</button>
-  </form>
-
-  <hr>
-
-  <section>
-    <h3>Create New Folder</h3>
-    <form action="/folders/create" method="POST">
-      <input type="text" name="name" placeholder="Folder Name" required>
-      <button type="submit">Create Folder</button>
+<%- include('../partials/header') %>
+  <header>
+    <h1>Welcome, <%= currentUser.username %>!</h1>
+    <form action="/auth/logout" method="POST">
+      <button type="submit">Logout</button>
     </form>
-  </section>
+  </header>
 
   <hr>
 
-  <section>
-    <h3>Upload an Image</h3>
-    <p>Allowed: JPG, PNG, GIF, WEBP (Max 5MB)</p>
-    <!-- CRITICAL: enctype="multipart/form-data" -->
-    <form action="/files/upload" method="POST" enctype="multipart/form-data">
-      <input type="file" name="file" required>
-
-      <!-- Optional: If you want to allow uploading to a specific folder -->
-      <select name="folderId">
-        <option value="">Root Directory</option>
-        <% folders.forEach(folder=> { %>
-          <option value="<%= folder.id %>">
-            <%= folder.name %>
-          </option>
-          <% }) %>
-      </select>
-
-      <button type="submit">Upload</button>
-    </form>
-  </section>
-
-  <hr>
-
-  <section>
-    <h3>Your Items</h3>
-
-    <h4>Folders</h4>
-    <ul>
-      <% if (folders.length===0) { %>
-        <li>No folders yet.</li>
-        <% } %>
-          <% folders.forEach(folder=> { %>
-            <li><a href="/folders/<%= folder.id %>">📁 <%= folder.name %></a></li>
-            <% }) %>
-    </ul>
-
-    <h4>Files (Root)</h4>
-    <ul>
-      <% if (files.length===0) { %>
-        <li>No files in root.</li>
-        <% } %>
-          <% files.forEach(file=> { %>
-            <li>
-              🖼️ <%= file.displayName %>
-                (<%= formatBytes(file.size) %>) -
-                  <%= formatExactDate(file.uploadedAt) %>
-                    <a href="/files/<%= file.id %>">View Details</a>
-            </li>
-            <% }) %>
-    </ul>
-  </section>
-</body>
-
-</html>
+  <main>
+    <section>
+      <h3>Create New Folder</h3>
+      <%- include('../partials/folderForm') %>
+    </section>
+    <hr>
+    <section>
+      <h3>Upload an Image</h3>
+      <p>Allowed: JPG, PNG, GIF, WEBP (Max 5MB)</p>
+      <%- include('../partials/fileForm') %>
+    </section>
+    <hr>
+    <section>
+      <h3>Your Items</h3>
+      <h4>Folders</h4>
+      <ul>
+        <% if (folders.length===0) { %>
+          <li>No folders yet.</li>
+          <% } %>
+            <% folders.forEach(folder=> { %>
+              <li><a href="/folders/<%= folder.id %>">📁 <%= folder.name %></a></li>
+              <% }) %>
+      </ul>
+      <h4>Files (Root)</h4>
+      <ul>
+        <% if (files.length===0) { %>
+          <li>No files in root.</li>
+          <% } %>
+            <% files.forEach(file=> { %>
+              <li>
+                🖼️ <%= file.displayName %>
+                  (<%= formatBytes(file.size) %>) -
+                    <%= formatExactDate(file.uploadedAt) %>
+                      <a href="/files/<%= file.id %>">View Details</a>
+              </li>
+              <% }) %>
+      </ul>
+    </section>
+  </main>
+  <%- include('../partials/footer') %>

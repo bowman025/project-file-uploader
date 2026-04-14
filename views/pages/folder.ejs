@@ -1,90 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('../partials/header') %>
 
-<head>
-  <meta charset="UTF-8">
-  <title>
-    <%= title %>
-  </title>
-</head>
+  <header>
+    <nav>
+      <a href="/dashboard">← Back to Dashboard</a>
+    </nav>
+  </header>
 
-<body>
-  <nav>
-    <a href="/dashboard">← Back to Dashboard</a>
-  </nav>
-
-  <h1>📁 Folder: <%= folder.name %>
-  </h1>
-  <p>Created on: <%= formatExactDate(folder.createdAt) %>
-  </p>
-
-  <div style="margin: 20px 0;">
-    <a href="/folders/<%= folder.id %>/confirm-delete" style="color: red; text-decoration: none;">
-      <button type="button" style="color: red;">Delete Folder</button>
-    </a>
-  </div>
-
-  <hr>
-
-  <section>
-    <h3>Upload an Image to this Folder</h3>
-    <form action="/files/upload" method="POST" enctype="multipart/form-data">
-      <input type="file" name="file" required>
-      <input type="hidden" name="folderId" value="<%= folder.id %>">
-      <button type="submit">Upload to <%= folder.name %></button>
-    </form>
-  </section>
-
-  <hr>
-
-  <section>
-    <h3>Share this Folder</h3>
-    <form action="/share/create" method="POST">
-      <input type="hidden" name="folderId" value="<%= folder.id %>">
-      <select name="duration">
-        <option value="1">1 Day</option>
-        <option value="7">7 Days</option>
-        <option value="30">30 Days</option>
-      </select>
-      <button type="submit">Generate Share Link</button>
-    </form>
-  </section>
-
-  <% if (activeShares.length> 0) { %>
+  <main>
+    <h1>📁 Folder: <%= folder.name %>
+    </h1>
+    <p>Created on: <%= formatExactDate(folder.createdAt) %>
+    </p>
+    <div>
+      <a href="/folders/<%= folder.id %>/confirm-delete">
+        <button type="button">Delete Folder</button>
+      </a>
+    </div>
+    <hr>
     <section>
-      <h3>Active Share Links</h3>
-      <ul>
-        <% activeShares.forEach(share=> { %>
-          <li>
-            <strong>URL:</strong>
-            <code><%= origin %>/share/<%= share.id %></code>
-            <p>Valid until: <%= formatExactDate(share.expiresAt) %>
-            </p>
-          </li>
-          <% }) %>
-      </ul>
+      <h3>Upload an Image to this Folder</h3>
+      <form action="/files/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <input type="hidden" name="folderId" value="<%= folder.id %>">
+        <button type="submit">Upload to <%= folder.name %></button>
+      </form>
     </section>
-    <% } %>
-
-      <hr>
-
+    <hr>
+    <section>
+      <h3>Share this Folder</h3>
+      <form action="/share/create" method="POST">
+        <input type="hidden" name="folderId" value="<%= folder.id %>">
+        <select name="duration">
+          <option value="1">1 Day</option>
+          <option value="7">7 Days</option>
+          <option value="30">30 Days</option>
+        </select>
+        <button type="submit">Generate Share Link</button>
+      </form>
+    </section>
+    <% if (activeShares.length> 0) { %>
       <section>
-        <h3>Files in this Folder</h3>
+        <h3>Active Share Links</h3>
         <ul>
-          <% if (folder.files.length===0) { %>
-            <li>This folder is empty.</li>
-            <% } %>
-              <% folder.files.forEach(file=> { %>
-                <li>
-                  🖼️ <%= file.displayName %>
-                    (<%= formatBytes(file.size) %>) -
-                      <%= formatExactDate(file.uploadedAt) %>
-                        <a href="/files/<%= file.id %>">View Details</a>
-                </li>
-                <% }); %>
+          <% activeShares.forEach(share=> { %>
+            <li>
+              <strong>URL:</strong>
+              <code><%= origin %>/share/<%= share.id %></code>
+              <p>Valid until: <%= formatExactDate(share.expiresAt) %>
+              </p>
+            </li>
+            <% }) %>
         </ul>
       </section>
-
-</body>
-
-</html>
+      <% } %>
+        <hr>
+        <section>
+          <h3>Files in this Folder</h3>
+          <ul>
+            <% if (folder.files.length===0) { %>
+              <li>This folder is empty.</li>
+              <% } %>
+                <% folder.files.forEach(file=> { %>
+                  <li>
+                    🖼️ <%= file.displayName %>
+                      (<%= formatBytes(file.size) %>) -
+                        <%= formatExactDate(file.uploadedAt) %>
+                          <a href="/files/<%= file.id %>">View Details</a>
+                  </li>
+                  <% }); %>
+          </ul>
+        </section>
+  </main>
+  <%- include('../partials/footer') %>

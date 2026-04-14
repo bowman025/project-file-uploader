@@ -1,55 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('../partials/header') %>
+  <header>
+    <nav>
+      <a href="<%= file.folderId ? '/folders/' + file.folderId : '/dashboard' %>">← Back</a>
+    </nav>
+  </header>
 
-<head>
-  <meta charset="UTF-8">
-  <title>
-    <%= title %>
-  </title>
-</head>
-
-<body>
-  <nav>
-    <a href="<%= file.folderId ? '/folders/' + file.folderId : '/dashboard' %>">← Back</a>
-  </nav>
-
-  <h1>File: <%= file.displayName %>
-  </h1>
-
-  <section>
-    <div class="preview">
-      <% if (file.cloudUrl) { %>
-        <img src="<%= file.cloudUrl %>" alt="<%= file.displayName %>" style="max-width: 500px;">
-        <% } else { %>
-          <img src="/uploads/<%= file.name %>" alt="<%= file.displayName %>" style="max-width: 500px;">
-          <% } %>
-    </div>
-    <ul>
-      <li><strong>Size:</strong>
-        <%= formatBytes(file.size) %>
-      </li>
-      <li><strong>Type:</strong>
-        <%= file.mimeType %>
-      </li>
-      <li><strong>Uploaded:</strong>
-        <%= formatExactDate(file.uploadedAt) %>
-      </li>
-      <li><strong>Location:</strong>
-        <%= file.folder ? file.folder.name : 'Root' %>
-      </li>
-    </ul>
-
-    <hr>
-
-    <div class="actions" style="margin-top: 20px;">
-      <a href="/files/<%= file.id %>/download" class="button">
-        <button type="button">Download File</button>
-      </a>
-      <a href="/files/<%= file.id %>/confirm-delete" style="color: red; text-decoration: none;">
-        <button type="button" style="color: red;">Delete File</button>
-      </a>
-    </div>
-  </section>
-</body>
-
-</html>
+  <main>
+    <h1>File: <%= file.displayName %>
+    </h1>
+    <section>
+      <div>
+        <% if (file.cloudUrl) { %>
+          <img src="<%= file.cloudUrl %>" alt="<%= file.displayName %>">
+          <% } else { %>
+            <img src="/uploads/<%= file.name %>" alt="<%= file.displayName %>">
+            <% } %>
+      </div>
+      <ul>
+        <li><strong>Size:</strong>
+          <%= formatBytes(file.size) %>
+        </li>
+        <li><strong>Type:</strong>
+          <%= file.mimeType %>
+        </li>
+        <li><strong>Uploaded:</strong>
+          <%= formatExactDate(file.uploadedAt) %>
+        </li>
+        <li><strong>Location:</strong>
+          <%= file.folder ? file.folder.name : 'Root' %>
+        </li>
+      </ul>
+      <hr>
+      <div>
+        <a href="/files/<%= file.id %>/download">
+          <button type="button">Download File</button>
+        </a>
+        <a href="/files/<%= file.id %>/confirm-delete">
+          <button type="button">Delete File</button>
+        </a>
+      </div>
+    </section>
+  </main>
+  <%- include('../partials/footer') %>

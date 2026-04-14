@@ -1,0 +1,12 @@
+<form action="/files/upload" method="POST" enctype="multipart/form-data">
+  <input type="file" name="file" required>
+  <select name="folderId">
+    <option value="">Root Directory</option>
+    <% folders.forEach(folder=> { %>
+      <option value="<%= folder.id %>">
+        <%= folder.name %>
+      </option>
+      <% }) %>
+  </select>
+  <button type="submit">Upload</button>
+</form>
