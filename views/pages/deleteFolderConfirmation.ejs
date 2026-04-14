@@ -1,13 +1,11 @@
 <%- include('../partials/header') %>
-  <header class="page-header confirm-header">
-    <nav class="breadcrumb-nav">
-      <a href="/folders/<%= folder.id %>" class="link-button">← Back to Folder</a>
-    </nav>
-  </header>
   <main class="confirm-page">
-
+    <div class="page-header confirm-header">
+      <nav class="breadcrumb-nav">
+        <a href="/folders/<%= folder.id %>" class="link-button">← Back to Folder</a>
+      </nav>
+    </div>
     <h1 class="page-title">Delete Folder</h1>
-
     <div class="confirm-card">
       <p class="confirm-message">Are you sure you want to permanently delete this folder and all its contents?</p>
 
@@ -27,7 +25,6 @@
             ⚠️ This action cannot be undone!
           </div>
     </div>
-
     <div class="confirm-actions">
       <form action="/folders/<%= folder.id %>/delete" method="POST" class="confirm-form">
         <button type="submit" class="btn btn-danger">

@@ -1,25 +1,20 @@
 <%- include('../partials/header') %>
-  <header class="page-header dashboard-header">
-    <h1 class="page-title">Welcome, <%= currentUser.username %>!</h1>
-    <form action="/auth/logout" method="POST" class="logout-form">
-      <button type="submit" class="btn btn-secondary">Logout</button>
-    </form>
-  </header>
-
-  <hr>
-
   <main class="dashboard-page">
+    <div class="page-header dashboard-header">
+      <h1 class="page-title">Welcome, <%= currentUser.username %>!</h1>
+      <form action="/auth/logout" method="POST" class="logout-form">
+        <button type="submit" class="btn btn-secondary">Logout</button>
+      </form>
+    </div>
     <section class="dashboard-section">
       <h3 class="section-title">Create New Folder</h3>
       <%- include('../partials/folderForm') %>
     </section>
-    <hr>
     <section class="dashboard-section">
       <h3 class="section-title">Upload an Image</h3>
       <p class="section-note">Allowed: JPG, PNG, GIF, WEBP (Max 5MB)</p>
       <%- include('../partials/fileForm') %>
     </section>
-    <hr>
     <section class="dashboard-section">
       <h3 class="section-title">Your Items</h3>
       <h4 class="list-heading">Folders</h4>

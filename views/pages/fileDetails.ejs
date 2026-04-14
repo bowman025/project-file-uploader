@@ -1,11 +1,10 @@
 <%- include('../partials/header') %>
-  <header class="page-header file-header">
-    <nav class="breadcrumb-nav">
-      <a href="<%= file.folderId ? '/folders/' + file.folderId : '/dashboard' %>" class="link-button">← Back</a>
-    </nav>
-  </header>
-
   <main class="file-details-page">
+    <div class="page-header file-header">
+      <nav class="breadcrumb-nav">
+        <a href="<%= file.folderId ? '/folders/' + file.folderId : '/dashboard' %>" class="link-button">← Back</a>
+      </nav>
+    </div>
     <h1 class="page-title">File: <%= file.displayName %>
     </h1>
     <section class="file-details-section">
@@ -30,7 +29,6 @@
           <%= file.folder ? file.folder.name : 'Root' %>
         </li>
       </ul>
-      <hr>
       <div class="action-buttons">
         <a href="/files/<%= file.id %>/download" class="btn btn-primary">Download File</a>
         <a href="/files/<%= file.id %>/confirm-delete" class="btn btn-danger">Delete File</a>
