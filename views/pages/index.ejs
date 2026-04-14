@@ -1,34 +1,28 @@
 <%- include('../partials/header') %>
-  <header>
-    <h1>img Stack</h1>
-    <p>A simple, secure place for your images.</p>
+  <header class="page-header home-header">
+    <h1 class="page-title">img Stack</h1>
+    <p class="page-subtitle">A simple, secure place for your images.</p>
   </header>
 
-  <main>
+  <main class="home-page">
     <% if (currentUser) { %>
-      <section>
-        <h2>Welcome back, <%= currentUser.username %>!</h2>
-        <p>Ready to manage your files?</p>
-        <div>
-          <a href="/dashboard">
-            <button type="button">Go to Dashboard</button>
-          </a>
-          <form action="/auth/logout" method="POST">
-            <button type="submit">Logout</button>
+      <section class="hero-section">
+        <h2 class="section-title">Welcome back, <%= currentUser.username %>!</h2>
+        <p class="section-note">Ready to manage your files?</p>
+        <div class="action-group">
+          <a href="/dashboard" class="btn btn-primary">Go to Dashboard</a>
+          <form action="/auth/logout" method="POST" class="inline-form">
+            <button type="submit" class="btn btn-secondary">Logout</button>
           </form>
         </div>
       </section>
       <% } else { %>
-        <section>
-          <h2>Get Started</h2>
-          <p>Please log in or create an account to start uploading images.</p>
-          <div>
-            <a href="/auth/login">
-              <button type="button">Log In</button>
-            </a>
-            <a href="/auth/signup">
-              <button type="button">Sign Up</button>
-            </a>
+        <section class="hero-section">
+          <h2 class="section-title">Get Started</h2>
+          <p class="section-note">Please log in or create an account to start uploading images.</p>
+          <div class="action-group">
+            <a href="/auth/login" class="btn btn-primary">Log In</a>
+            <a href="/auth/signup" class="btn btn-secondary">Sign Up</a>
           </div>
         </section>
         <% } %>

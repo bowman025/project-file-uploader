@@ -1,18 +1,18 @@
 <%- include('../partials/header') %>
 
-  <main>
-    <h1>Shared Folder: <%= folder.name %>
+  <main class="shared-folder-page">
+    <h1 class="page-title">Shared Folder: <%= folder.name %>
     </h1>
-    <p>Valid until: <%= formatExactDate(expiresAt) %>
+    <p class="share-note">Valid until: <%= formatExactDate(expiresAt) %>
     </p>
-    <ul>
+    <ul class="shared-file-list">
       <% folder.files.forEach(file=> { %>
-        <li>
-          <img src="<%= file.cloudUrl %>" width="100">
-          <%= file.displayName %>
-            <a href="/share/<%= file.id %>/download">
-              <button type="button">Download File</button>
-            </a>
+        <li class="shared-file-item">
+          <img src="<%= file.cloudUrl %>" class="shared-file-thumb" width="100" alt="<%= file.displayName %>">
+          <span class="shared-file-name">
+            <%= file.displayName %>
+          </span>
+          <a href="/share/<%= file.id %>/download" class="btn btn-primary">Download File</a>
         </li>
         <% }) %>
     </ul>

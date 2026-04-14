@@ -1,43 +1,39 @@
 <%- include('../partials/header') %>
-  <header>
-    <nav>
-      <a href="<%= file.folderId ? '/folders/' + file.folderId : '/dashboard' %>">← Back</a>
+  <header class="page-header file-header">
+    <nav class="breadcrumb-nav">
+      <a href="<%= file.folderId ? '/folders/' + file.folderId : '/dashboard' %>" class="link-button">← Back</a>
     </nav>
   </header>
 
-  <main>
-    <h1>File: <%= file.displayName %>
+  <main class="file-details-page">
+    <h1 class="page-title">File: <%= file.displayName %>
     </h1>
-    <section>
-      <div>
+    <section class="file-details-section">
+      <div class="file-preview">
         <% if (file.cloudUrl) { %>
-          <img src="<%= file.cloudUrl %>" alt="<%= file.displayName %>">
+          <img src="<%= file.cloudUrl %>" alt="<%= file.displayName %>" class="file-image">
           <% } else { %>
-            <img src="/uploads/<%= file.name %>" alt="<%= file.displayName %>">
+            <img src="/uploads/<%= file.name %>" alt="<%= file.displayName %>" class="file-image">
             <% } %>
       </div>
-      <ul>
-        <li><strong>Size:</strong>
+      <ul class="file-meta-list">
+        <li class="file-meta-item"><strong>Size:</strong>
           <%= formatBytes(file.size) %>
         </li>
-        <li><strong>Type:</strong>
+        <li class="file-meta-item"><strong>Type:</strong>
           <%= file.mimeType %>
         </li>
-        <li><strong>Uploaded:</strong>
+        <li class="file-meta-item"><strong>Uploaded:</strong>
           <%= formatExactDate(file.uploadedAt) %>
         </li>
-        <li><strong>Location:</strong>
+        <li class="file-meta-item"><strong>Location:</strong>
           <%= file.folder ? file.folder.name : 'Root' %>
         </li>
       </ul>
       <hr>
-      <div>
-        <a href="/files/<%= file.id %>/download">
-          <button type="button">Download File</button>
-        </a>
-        <a href="/files/<%= file.id %>/confirm-delete">
-          <button type="button">Delete File</button>
-        </a>
+      <div class="action-buttons">
+        <a href="/files/<%= file.id %>/download" class="btn btn-primary">Download File</a>
+        <a href="/files/<%= file.id %>/confirm-delete" class="btn btn-danger">Delete File</a>
       </div>
     </section>
   </main>

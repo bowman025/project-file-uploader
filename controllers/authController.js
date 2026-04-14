@@ -64,7 +64,7 @@ exports.postSignup = [
 ];
 
 exports.getLogin = (req, res) => {
-  const errors = req.session.messages || [];
+  const errors = (req.session.messages || []).map((message) => ({ msg: message }));
   req.session.messages = [];
   res.render('login', { title: 'Log In', errors });
 }

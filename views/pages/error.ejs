@@ -1,12 +1,12 @@
-<%- include('../partials/header') %>>
-  <main>
-    <h1>Oops! Something went wrong</h1>
-    <p>
+<%- include('../partials/header') %>
+  <main class="error-page">
+    <h1 class="page-title">Oops! Something went wrong</h1>
+    <p class="error-message">
       <%= message %>
     </p>
-    <a href="/">Return to Home</a>
+    <a href="/" class="btn btn-secondary">Return to Home</a>
     <% if (process.env.NODE_ENV==='development' ) { %>
-      <pre><%= error.stack %></pre>
+      <pre class="error-stack"><%= error.stack %></pre>
       <% } %>
   </main>
   <%- include('../partials/footer') %>

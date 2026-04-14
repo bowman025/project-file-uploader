@@ -1,18 +1,18 @@
 <%- include('../partials/header') %>
-  <header>
-    <h1>Sign Up</h1>
+  <header class="page-header auth-header">
+    <h1 class="page-title">Sign Up</h1>
   </header>
-  <main>
+  <main class="auth-page">
     <% if (errors && errors.length> 0) { %>
-      <ul>
+      <ul class="error-list">
         <% errors.forEach(error=> { %>
-          <li>
-            <%= error.msg %>
+          <li class="error-item">
+            <%= error.msg || error %>
           </li>
           <% }) %>
       </ul>
       <% } %>
         <%- include('../partials/signupForm') %>
-          <p>Already have an account? <a href="/auth/login">Log In</a></p>
+          <p class="auth-prompt">Already have an account? <a href="/auth/login" class="link-button">Log In</a></p>
   </main>
   <%- include('../partials/footer') %>

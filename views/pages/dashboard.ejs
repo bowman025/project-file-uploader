@@ -1,47 +1,47 @@
 <%- include('../partials/header') %>
-  <header>
-    <h1>Welcome, <%= currentUser.username %>!</h1>
-    <form action="/auth/logout" method="POST">
-      <button type="submit">Logout</button>
+  <header class="page-header dashboard-header">
+    <h1 class="page-title">Welcome, <%= currentUser.username %>!</h1>
+    <form action="/auth/logout" method="POST" class="logout-form">
+      <button type="submit" class="btn btn-secondary">Logout</button>
     </form>
   </header>
 
   <hr>
 
-  <main>
-    <section>
-      <h3>Create New Folder</h3>
+  <main class="dashboard-page">
+    <section class="dashboard-section">
+      <h3 class="section-title">Create New Folder</h3>
       <%- include('../partials/folderForm') %>
     </section>
     <hr>
-    <section>
-      <h3>Upload an Image</h3>
-      <p>Allowed: JPG, PNG, GIF, WEBP (Max 5MB)</p>
+    <section class="dashboard-section">
+      <h3 class="section-title">Upload an Image</h3>
+      <p class="section-note">Allowed: JPG, PNG, GIF, WEBP (Max 5MB)</p>
       <%- include('../partials/fileForm') %>
     </section>
     <hr>
-    <section>
-      <h3>Your Items</h3>
-      <h4>Folders</h4>
-      <ul>
+    <section class="dashboard-section">
+      <h3 class="section-title">Your Items</h3>
+      <h4 class="list-heading">Folders</h4>
+      <ul class="folder-list">
         <% if (folders.length===0) { %>
-          <li>No folders yet.</li>
+          <li class="empty-state">No folders yet.</li>
           <% } %>
             <% folders.forEach(folder=> { %>
-              <li><a href="/folders/<%= folder.id %>">📁 <%= folder.name %></a></li>
+              <li class="folder-item"><a href="/folders/<%= folder.id %>" class="link-button">📁 <%= folder.name %></a>
+              </li>
               <% }) %>
       </ul>
-      <h4>Files (Root)</h4>
-      <ul>
+      <h4 class="list-heading">Files (Root)</h4>
+      <ul class="file-list">
         <% if (files.length===0) { %>
-          <li>No files in root.</li>
+          <li class="empty-state">No files in root.</li>
           <% } %>
             <% files.forEach(file=> { %>
-              <li>
-                🖼️ <%= file.displayName %>
-                  (<%= formatBytes(file.size) %>) -
-                    <%= formatExactDate(file.uploadedAt) %>
-                      <a href="/files/<%= file.id %>">View Details</a>
+              <li class="file-item">
+                <span class="file-name">🖼️ <%= file.displayName %></span>
+                <span class="file-meta">(<%= formatBytes(file.size) %>) - <%= formatExactDate(file.uploadedAt) %></span>
+                <a href="/files/<%= file.id %>" class="link-button">View Details</a>
               </li>
               <% }) %>
       </ul>

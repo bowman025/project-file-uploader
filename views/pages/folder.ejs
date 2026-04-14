@@ -1,52 +1,50 @@
 <%- include('../partials/header') %>
 
-  <header>
-    <nav>
-      <a href="/dashboard">← Back to Dashboard</a>
+  <header class="page-header folder-header">
+    <nav class="breadcrumb-nav">
+      <a href="/dashboard" class="link-button">← Back to Dashboard</a>
     </nav>
   </header>
 
-  <main>
-    <h1>📁 Folder: <%= folder.name %>
+  <main class="folder-page">
+    <h1 class="page-title">📁 Folder: <%= folder.name %>
     </h1>
-    <p>Created on: <%= formatExactDate(folder.createdAt) %>
+    <p class="folder-meta">Created on: <%= formatExactDate(folder.createdAt) %>
     </p>
-    <div>
-      <a href="/folders/<%= folder.id %>/confirm-delete">
-        <button type="button">Delete Folder</button>
-      </a>
+    <div class="folder-actions">
+      <a href="/folders/<%= folder.id %>/confirm-delete" class="btn btn-danger">Delete Folder</a>
     </div>
     <hr>
-    <section>
-      <h3>Upload an Image to this Folder</h3>
-      <form action="/files/upload" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" required>
+    <section class="upload-section">
+      <h3 class="section-title">Upload an Image to this Folder</h3>
+      <form action="/files/upload" method="POST" enctype="multipart/form-data" class="upload-form">
+        <input type="file" name="file" class="form-input" required>
         <input type="hidden" name="folderId" value="<%= folder.id %>">
-        <button type="submit">Upload to <%= folder.name %></button>
+        <button type="submit" class="btn btn-primary">Upload to <%= folder.name %></button>
       </form>
     </section>
     <hr>
-    <section>
-      <h3>Share this Folder</h3>
-      <form action="/share/create" method="POST">
+    <section class="share-section">
+      <h3 class="section-title">Share this Folder</h3>
+      <form action="/share/create" method="POST" class="share-form">
         <input type="hidden" name="folderId" value="<%= folder.id %>">
-        <select name="duration">
+        <select name="duration" class="form-select">
           <option value="1">1 Day</option>
           <option value="7">7 Days</option>
           <option value="30">30 Days</option>
         </select>
-        <button type="submit">Generate Share Link</button>
+        <button type="submit" class="btn btn-primary">Generate Share Link</button>
       </form>
     </section>
     <% if (activeShares.length> 0) { %>
-      <section>
-        <h3>Active Share Links</h3>
-        <ul>
+      <section class="share-list-section">
+        <h3 class="section-title">Active Share Links</h3>
+        <ul class="share-list">
           <% activeShares.forEach(share=> { %>
-            <li>
+            <li class="share-item">
               <strong>URL:</strong>
               <code><%= origin %>/share/<%= share.id %></code>
-              <p>Valid until: <%= formatExactDate(share.expiresAt) %>
+              <p class="share-expiry">Valid until: <%= formatExactDate(share.expiresAt) %>
               </p>
             </li>
             <% }) %>
@@ -54,18 +52,18 @@
       </section>
       <% } %>
         <hr>
-        <section>
-          <h3>Files in this Folder</h3>
-          <ul>
+        <section class="folder-files-section">
+          <h3 class="section-title">Files in this Folder</h3>
+          <ul class="file-list">
             <% if (folder.files.length===0) { %>
-              <li>This folder is empty.</li>
+              <li class="empty-state">This folder is empty.</li>
               <% } %>
                 <% folder.files.forEach(file=> { %>
-                  <li>
-                    🖼️ <%= file.displayName %>
-                      (<%= formatBytes(file.size) %>) -
-                        <%= formatExactDate(file.uploadedAt) %>
-                          <a href="/files/<%= file.id %>">View Details</a>
+                  <li class="file-item">
+                    <span class="file-name">🖼️ <%= file.displayName %></span>
+                    <span class="file-meta">(<%= formatBytes(file.size) %>) - <%= formatExactDate(file.uploadedAt) %>
+                          </span>
+                    <a href="/files/<%= file.id %>" class="link-button">View Details</a>
                   </li>
                   <% }); %>
           </ul>
