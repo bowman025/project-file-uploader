@@ -21,7 +21,9 @@ const fileFilter = (req, file, cb) => {
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error('Only images (JPEG, PNG, GIF) are allowed!'), false);
+    const error = new Error('Only images (JPEG, PNG, GIF) are allowed!');
+    error.status = 400;
+    cb(error, false);
   }
 }
 

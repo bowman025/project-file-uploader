@@ -6,7 +6,7 @@
     </p>
     <a href="/" class="btn btn-secondary">Return to Home</a>
     <% if (process.env.NODE_ENV==='development' ) { %>
-      <pre class="error-stack"><%= error.stack %></pre>
+      <pre class="error-stack"><%= stack %></pre>
       <% } %>
   </main>
   <%- include('../partials/footer') %>

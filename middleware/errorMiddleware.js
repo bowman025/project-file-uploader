@@ -12,5 +12,6 @@ exports.globalErrorHandler = (err, req, res, next) => {
   res.status(statusCode).render('error', {
     title: 'img Stack: Error',
     message,
+    stack: err.stack,
   });
 }
