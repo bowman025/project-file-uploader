@@ -1,9 +1,15 @@
 <%- include('../partials/header') %>
   <main class="home-page">
+    <section class="index-section">
+      <a href="/">
+        <h1 class="index-title">img <img src="/images/stack.svg" alt="img Stack"> Stack</h1>
+      </a>
+      <p class="index-subtitle">A simple, secure place for your images.</p>
+    </section>
     <% if (currentUser) { %>
       <section class="hero-section">
         <h2 class="section-title">Welcome back, <%= currentUser.username %>!</h2>
-        <p class="section-note">Ready to manage your files?</p>
+        <p class="section-note">Ready to manage your images?</p>
         <div class="action-group">
           <a href="/dashboard" class="btn btn-primary">Go to Dashboard</a>
           <form action="/auth/logout" method="POST" class="inline-form">

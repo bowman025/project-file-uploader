@@ -69,11 +69,23 @@ exports.getLogin = (req, res) => {
   res.render('login', { title: 'Log In', errors });
 }
 
-exports.postLogin = passport.authenticate('local', {
-  successRedirect: '/dashboard',
-  failureRedirect: '/auth/login',
-  failureMessage: true,
-});
+exports.postLogin = (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) return next(err);
+
+    if (!user) {
+      req.session.messages = [info.message];
+      return req.session.save(() => {
+        res.redirect('/auth/login');
+      });
+    }
+
+    req.login(user, (err) => {
+      if (err) return next(err);
+      res.redirect('/dashboard');
+    });
+  })(req, res, next);
+};
 
 exports.postLogout = (req, res, next) => {
   req.logout((err) => {
