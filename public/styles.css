@@ -221,7 +221,7 @@ section {
 .folder-meta,
 .error-message,
 .confirm-message {
-  margin: 0.8rem 0;
+  margin: 0.5rem 0;
   color: var(--muted);
   text-align: center;
 }
@@ -254,6 +254,18 @@ section {
   border-radius: 1rem;
   box-shadow: var(--shadow);
   padding: 1.5rem;
+
+  .list-heading {
+    margin-bottom: 0.25rem;
+  }
+}
+
+.file-details-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }
 
 .form-row {
@@ -368,8 +380,6 @@ ul {
 
 .folder-list,
 .file-list,
-.shared-file-list,
-.share-list,
 .error-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -379,10 +389,16 @@ ul {
   margin-bottom: 0.5rem;
 }
 
+.share-list,
+.shared-file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .folder-item,
 .file-item,
 .shared-file-item,
-.share-item,
 .error-item,
 .empty-state {
   height: 100%;
@@ -394,9 +410,36 @@ ul {
   color: var(--text);
 }
 
+.file-item {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.share-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  justify-content: center;
+
+  code {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+    display: inline-block;
+  }
+}
+
+.shared-file-item {
+  flex-direction: column;
+
+  .btn-primary {
+    margin-top: auto;
+  }
+}
+
 .error-item {
   border-left: 4px solid var(--danger);
-  background: rgba(254, 226, 226, 0.75);
 }
 
 .empty-state {
@@ -409,20 +452,15 @@ ul {
 .confirm-details,
 .file-meta-item {
   color: var(--muted);
+  font-style: italic;
 }
 
-.file-preview,
+.file-image,
 .shared-file-thumb {
+  width: clamp(200px, 95vw, 400px);
   max-width: 100%;
   border-radius: 1rem;
   object-fit: cover;
-}
-
-.file-image {
-  width: 100%;
-  max-width: 420px;
-  border-radius: 1rem;
-  margin-bottom: 1rem;
 }
 
 .confirm-card {
@@ -450,8 +488,7 @@ footer {
   .page-header,
   .confirm-actions,
   .action-group,
-  .file-item,
-  .shared-file-item {
+  .file-item {
     flex-direction: column;
     align-items: stretch;
   }

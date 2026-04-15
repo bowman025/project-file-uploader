@@ -38,8 +38,10 @@
         <ul class="share-list">
           <% activeShares.forEach(share=> { %>
             <li class="share-item">
-              <strong>URL:</strong>
-              <code><%= origin %>/share/<%= share.id %></code>
+              <span>
+                <strong>URL:</strong>
+                <code><%= origin %>/share/<%= share.id %></code>
+              </span>
               <p class="share-expiry">Valid until: <%= formatExactDate(share.expiresAt) %>
               </p>
             </li>
