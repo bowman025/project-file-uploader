@@ -7,6 +7,18 @@
       </form>
     </div>
     <section class="dashboard-section">
+      <h3 class="section-title">Storage Usage</h3>
+      <% let barColor='#4caf50' ; %>
+        <% if (percentUsed> 90) { barColor = '#f44336' %>
+          <% } else if (percentUsed> 70) { barColor = '#ff9800'; } %>
+            <div class="progress-container">
+              <div class="progress-bar" style="--width: <%= percentUsed %>%; --bg-color: <%= barColor %>;"></div>
+            </div>
+            <p class="section-note">
+              <%= usedMB %> MB of 50 MB used
+            </p>
+    </section>
+    <section class="dashboard-section">
       <h3 class="section-title">Create New Folder</h3>
       <%- include('../partials/folderForm') %>
     </section>

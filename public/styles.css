@@ -291,6 +291,20 @@ button:focus {
   gap: 0.8rem;
 }
 
+.progress-container {
+  background-color: var(--surface-soft);
+  border-radius: 0.5rem;
+  height: 1.5rem;
+  overflow: hidden;
+
+  .progress-bar {
+    width: var(--width, 0%);
+    height: 100%;
+    background-color: var(--bg-color, #4caf50);
+    transition: width 0.5s ease-in-out, background-color 0.3s ease;
+  }
+}
+
 input[type="file"]::file-selector-button {
   cursor: pointer;
   padding: 0.5rem 0.75rem;

@@ -4,6 +4,8 @@ const streamifier = require('streamifier');
 const cloudinary = require('../lib/cloudinary');
 const { prisma } = require('../lib/prisma');
 
+const MAX_STORAGE_BYTES = 50 * 1024 * 1024;
+
 const getFileAndCheckOwnership = async (fileId, userId, includeOptions = {}) => {
   const file = await prisma.file.findUnique({
     where: { id: fileId },
@@ -33,6 +35,19 @@ exports.uploadFile = async (req, res, next) => {
       mimeType: req.file.mimetype,
       userId: req.user.id,
       folderId: folderId || null,
+    }
+
+    const usage = await prisma.file.aggregate({
+      where: { userId: req.user.id },
+      _sum: { size: true },
+    });
+    const currentTotal = Number(usage._sum.size) || 0;
+
+    if (currentTotal + fileData.size > MAX_STORAGE_BYTES) {
+      return res.status(400).render('error', {
+        title: 'Storage Limit Exceeded',
+        message: `You have used ${(currentTotal / (1024 * 1024)).toFixed(2)} MB. This upload would exceed your 50 MB limit.`
+      });
     }
 
     if (process.env.STORAGE_MODE === 'cloudinary') {
