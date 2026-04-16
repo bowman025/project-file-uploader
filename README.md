@@ -35,11 +35,11 @@ A Google Drive-inspired file storage app built with Node.js and Express. Users c
 
 ```bash
    git clone https://github.com/bowman025/project-file-uploader.git
-   cd img-stack
+   cd project-file-uploader
    npm install
 ```
 
-2. Create a `.env` file in the root directory:
+1. Create a `.env` file in the root directory:
 
 ```env
    DATABASE_URL=your_neon_pooled_connection_string
@@ -51,13 +51,13 @@ A Google Drive-inspired file storage app built with Node.js and Express. Users c
    STORAGE_MODE=cloudinary
 ```
 
-3. Run database migrations:
+1. Run database migrations:
 
 ```bash
    npx prisma migrate dev
 ```
 
-4. Start the development server:
+1. Start the development server:
 
 ```bash
    node --watch app.js
