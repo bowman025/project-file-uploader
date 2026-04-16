@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="<%= theme %>">
 
 <head>
   <meta charset="UTF-8">
@@ -17,6 +17,7 @@
       <h1 class="home-title">i <img src="/images/stack.svg" alt="img Stack"> S</h1>
     </a>
 
-    <button id="theme-toggle" class="btn btn-secondary theme-toggle" type="button"
-      aria-label="Toggle color theme">Toggle theme</button>
+    <button id="theme-toggle" class="btn btn-secondary theme-toggle" type="button" aria-label="Toggle color theme">
+      <%= theme==='dark' ? '☀️ Light' : '🌙 Dark' %>
+    </button>
   </header>
