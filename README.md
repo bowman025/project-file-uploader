@@ -1,4 +1,4 @@
-# Project: File Uploader
+# imgStack (Project: File Uploader)
 
 A Google Drive-inspired file storage app built with Node.js and Express. Users can upload images, organise them into folders, and share folders via time-limited links.
 
